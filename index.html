@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Input Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .image-container {
+            background-image: url("https://cdn.create.vista.com/api/media/medium/228244174/stock-photo-top-view-diabetes-medical-equipment?token=.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            opacity: 0.7;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        h2 {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        input[type="number"] {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="image-container"></div>
+    <div class="container">
+        <h2>Enter Values</h2>
+        <form>
+            <label for="value1">Pregnancies:</label>
+            <input type="number" id="value1" step="any" placeholder="Value 1">
+            <br>
+            
+            <label for="value2">Glucose:</label>
+            <input type="number" id="value2" step="any" placeholder="Value 2">
+            <br>
+            
+            <label for="BloodPressure">BloodPressure: </label>
+            <input type="number" id="value3" step="any" placeholder="Value 3">
+            <br>
+
+            <label for="SkinThickness">SkinThickness: </label>
+            <input type="number" id="value4" step="any" placeholder="Value 4">
+            <br>
+            
+            <label for="Insulin">Insulin: </label>
+            <input type="number" id="value5" step="any" placeholder="Value 5">
+            <br>
+
+            <label for="BMI">BMI: </label>
+            <input type="number" id="value6" step="any" placeholder="Value 6">
+            <br>
+
+            <label for="DiabetesPedigreeFunction">DiabetesPedigreeFunction: </label>
+            <input type="number" id="value7" step="any" placeholder="Value 7">
+            <br>
+
+            <label for="Age">Age: </label>
+            <input type="number" id="value8" step="any" placeholder="Value 8">
+            <br>
+            
+            <button type="button" onclick="sendValues()">Submit</button>
+        </form>
+        
+        <h2>Result</h2>
+        <p id="result"></p>
+    </div>
+    </div>
+
+    <script>
+        function sendValues() {
+            var value1 = document.getElementById("value1").value;
+            var value2 = document.getElementById("value2").value;
+            var value3 = document.getElementById("value3").value;
+            var value4 = document.getElementById("value4").value;
+            var value5 = document.getElementById("value5").value;
+            var value6 = document.getElementById("value6").value;
+            var value7 = document.getElementById("value7").value;
+            var value8 = document.getElementById("value8").value;
+
+            // Get values from additional input fields
+            
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    document.getElementById("result").innerText = response.result;
+                }
+            };
+            xhr.open("POST", "http://127.0.0.1:5000/predict", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify({ value1: value1, value2: value2, value3: value3, value4: value4, value5: value5, value6: value6, value7: value7, value8: value8 }));
+        }
+    </script>
+</body>
+</html>
