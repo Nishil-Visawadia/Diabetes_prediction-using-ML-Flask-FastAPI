@@ -95,7 +95,7 @@
             
             <button type="button" onclick="sendValues()">Submit</button>
         </form>
-        
+
         <h2>Result</h2>
         <p id="result"></p>
     </div>
@@ -121,7 +121,13 @@
                     document.getElementById("result").innerText = response.result;
                 }
             };
-            xhr.open("POST", "http://127.0.0.1:5000/predict", true);
+
+            // This line is for Flask 
+            // xhr.open("POST", "http://127.0.0.1:5000/predict", true);
+
+            // This line is for FastAPI
+            xhr.open("POST", "http://127.0.0.1:8000/predict", true);
+
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.send(JSON.stringify({ value1: value1, value2: value2, value3: value3, value4: value4, value5: value5, value6: value6, value7: value7, value8: value8 }));
         }
