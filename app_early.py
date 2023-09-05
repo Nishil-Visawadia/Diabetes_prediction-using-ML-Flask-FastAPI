@@ -8,7 +8,6 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn import svm
 from sklearn.metrics import accuracy_score
-from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -20,27 +19,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class InputData(BaseModel):
-    value1: float
-    value2: float
-    value3: float
-    value4: float
-    value5: float
-    value6: float
-    value7: float
-    value8: float
-
 @app.post("/predict")
-async def predict(data: InputData):
-    # data = await request.json()
-    value1 = data.value1
-    value2 = data.value2
-    value3 = data.value3
-    value4 = data.value4
-    value5 = data.value5
-    value6 = data.value6
-    value7 = data.value7
-    value8 = data.value8
+async def predict(request: Request):
+    data = await request.json()
+    value1 = data["value1"]
+    value2 = data["value2"]
+    value3 = data["value3"]
+    value4 = data["value4"]
+    value5 = data["value5"]
+    value6 = data["value6"]
+    value7 = data["value7"]
+    value8 = data["value8"]
 
     # loading the diabetes dataset to a pandas DataFrame
     diabetes_dataset = pd.read_csv("diabetes.csv")
