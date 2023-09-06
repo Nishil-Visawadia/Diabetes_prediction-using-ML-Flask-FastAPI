@@ -60,7 +60,7 @@
     <div class="image-container"></div>
     <div class="container">
         <h2>Enter Values</h2>
-        <form>
+
             <label for="value1">Pregnancies:</label>
             <input type="number" id="value1" step="any" placeholder="Value 1">
             <br>
@@ -94,7 +94,6 @@
             <br>
             
             <button type="button" onclick="sendValues()">Submit</button>
-        </form>
 
         <h2>Result</h2>
         <p id="result"></p>
@@ -116,9 +115,13 @@
             
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    var response = JSON.parse(xhr.responseText);
-                    document.getElementById("result").innerText = response.result;
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        document.getElementById("result").innerText = response.result;
+                    } else {
+                        console.error('Request failed with status:', xhr.status);
+                    }
                 }
             };
 
@@ -126,7 +129,10 @@
             // xhr.open("POST", "http://127.0.0.1:5000/predict", true);
 
             // This line is for FastAPI
-            xhr.open("POST", "http://127.0.0.1:8000/predict", true);
+            // xhr.open("POST", "http://127.0.0.1:8000/predict", true);
+
+            // This is for vercel
+            xhr.open("POST", "https://diabetes-prediction-flax.vercel.app/api/predict", true);
 
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.send(JSON.stringify({ value1: value1, value2: value2, value3: value3, value4: value4, value5: value5, value6: value6, value7: value7, value8: value8 }));
