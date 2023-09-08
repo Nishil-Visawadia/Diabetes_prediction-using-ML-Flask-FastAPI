@@ -31,7 +31,11 @@ class InputData(BaseModel):
     value7: float
     value8: float
 
-@app.post("/predict")
+@app.get("/", tags=["Root"])
+async def hello():
+    return {"hello":"You successfully deployed"}
+
+@app.post("/predict", tags=["Root"])
 async def predict(data: InputData):
     # data = await request.json()
     value1 = data.value1
@@ -44,7 +48,7 @@ async def predict(data: InputData):
     value8 = data.value8
 
     # loading the diabetes dataset to a pandas DataFrame
-    diabetes_dataset = pd.read_csv("diabetes.csv")
+    diabetes_dataset = pd.read_csv("/diabetes.csv")
 
     diabetes_dataset["Outcome"].value_counts()
     # separating the data and labels
@@ -97,4 +101,4 @@ async def predict(data: InputData):
     return JSONResponse({"result": result})
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)
