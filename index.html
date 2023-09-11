@@ -131,9 +131,6 @@
             // This line is for FastAPI
             xhr.open("POST", "http://127.0.0.1:8000/predict", true);
 
-            // This is for vercel
-            // xhr.open("POST", "https://diabetes-prediction-flax.vercel.app/api/predict", true);
-
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.send(JSON.stringify({ value1: value1, value2: value2, value3: value3, value4: value4, value5: value5, value6: value6, value7: value7, value8: value8 }));
         }

@@ -48,7 +48,7 @@ async def predict(data: InputData):
     value8 = data.value8
 
     # loading the diabetes dataset to a pandas DataFrame
-    diabetes_dataset = pd.read_csv("../../diabetes.csv")
+    diabetes_dataset = pd.read_csv("/diabetes.csv")
 
     diabetes_dataset["Outcome"].value_counts()
     # separating the data and labels
